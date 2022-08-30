@@ -11,12 +11,12 @@ My template collections 🏗️
 
 ---
 
-## Rust
+## 🦀 Rust
 
-- [Rust GraphQL](https://github.com/azzamsa/rust-graphql)
-- [Rust CLI](https://github.com/azzamsa/rust-cli)
+- [GraphQL](https://github.com/azzamsa/rust-graphql)
+- [CLI](https://github.com/azzamsa/rust-cli)
 
-## Javascript
+## 🌏 Javascript
 
 - [Vue](https://github.com/azzamsa/js-vue)
 - [Svelte](https://github.com/azzamsa/js-svelte)
