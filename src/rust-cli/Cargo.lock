@@ -75,12 +75,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cargo-husky"
-version = "1.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7b02b629252fe8ef6460461409564e2c21d0c8e77e0944f3d189ff06c4e932ad"
-
-[[package]]
 name = "clap"
 version = "3.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -103,21 +97,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2850f2f5a82cbf437dd5af4d49848fbdfc27c157c3d010345776f952765261c5"
 dependencies = [
  "os_str_bytes",
-]
-
-[[package]]
-name = "cli"
-version = "0.1.1"
-dependencies = [
- "ansi_term",
- "anyhow",
- "assert_cmd",
- "atty",
- "cargo-husky",
- "clap",
- "predicates",
- "thiserror",
- "wild",
 ]
 
 [[package]]
@@ -204,6 +183,20 @@ name = "memchr"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+
+[[package]]
+name = "mold"
+version = "0.1.1"
+dependencies = [
+ "ansi_term",
+ "anyhow",
+ "assert_cmd",
+ "atty",
+ "clap",
+ "predicates",
+ "thiserror",
+ "wild",
+]
 
 [[package]]
 name = "normalize-line-endings"

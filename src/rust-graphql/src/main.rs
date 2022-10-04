@@ -4,10 +4,10 @@ use std::{
 };
 
 use axum::Server;
-use graph::{config::Config, logger, routes::app};
+use mold::{config::Config, logger, routes::app};
 
 #[tokio::main]
-async fn main() -> Result<(), graph::Error> {
+async fn main() -> Result<(), mold::Error> {
     let config = Arc::new(Config::load()?);
     logger::init(&config);
 

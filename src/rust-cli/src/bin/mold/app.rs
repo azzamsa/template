@@ -2,7 +2,7 @@ use std::path::Path;
 
 use atty::{self, Stream};
 use clap::ArgMatches;
-use cli::{config::Config, error::Result};
+use mold::{config::Config, error::Result};
 
 use crate::clap_app;
 

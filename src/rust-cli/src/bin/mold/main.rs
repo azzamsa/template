@@ -5,7 +5,7 @@ mod clap_app;
 
 use std::process;
 
-use cli::{
+use mold::{
     config::Config,
     controller::Controller,
     error::{default_error_handler, Result},
