@@ -1,0 +1,140 @@
+name: Rust GraphQL (CI)
+
+on:
+  push:
+    paths:
+      -  src/rust-graphql/**
+      - .github/workflows/rust_graphql.yml
+  pull_request:
+    paths:
+      -  src/rust-graphql/**
+      - .github/workflows/rust_graphql.yml
+
+defaults:
+  run:
+    working-directory: src/rust-graphql
+
+env:
+  MIN_SUPPORTED_RUST_VERSION: "1.62.0"
+
+jobs:
+  code_quality:
+    name: Code quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          # I need nightly for rustfmt
+          toolchain: nightly
+          default: true
+          profile: minimal # no documentation
+          components: clippy, rustfmt
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+
+      - name: Install dprint
+        run: |
+          curl --location https://github.com/dprint/dprint/releases/download/0.30.3/dprint-x86_64-unknown-linux-gnu.zip --output dprint.zip
+          unzip dprint.zip
+          cp dprint ~/.cargo/bin/
+          dprint --version
+
+      - name: Ensure `fmt` has been run
+        run:  make fmt_check
+
+      - name: Ensure MSRV is set in `clippy.toml`
+        run: grep "^msrv = \"${{ env.MIN_SUPPORTED_RUST_VERSION }}\"\$" clippy.toml
+
+      - name: Run clippy
+        env:
+          SQLX_OFFLINE: true
+        run: make lint
+
+
+  min_version:
+    name: Minimum supported rust version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install rust toolchain (v${{ env.MIN_SUPPORTED_RUST_VERSION }})
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ env.MIN_SUPPORTED_RUST_VERSION }}
+          default: true
+          profile: minimal
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+
+      - name: Prepare the environment variables
+        run: |
+          cp .example.env .env
+
+      - name: Prepare the database
+        run: |
+          docker-compose -f ./tests/docker-compose.yml run -d -p 5432:5432 --name postgres_db postgres_db
+          docker exec postgres_db bash -c "until pg_isready; do sleep 1; done"
+
+      - name: Migrate the database 
+        env:
+          DATABASE_URL: postgres://superuser:secret@localhost:5432/nahla
+        run: |
+          cargo install sqlx-cli --no-default-features --features postgres,native-tls
+
+          sqlx database create
+          sqlx migrate --source db/migrations/ run
+
+      - name: Run tests
+        env:
+          DATABASE_URL: postgres://superuser:secret@localhost:5432/nahla
+        run: make test
+
+  build:
+    name: Build (${{ matrix.job.os }}, ${{ matrix.job.target }})
+    runs-on: ${{ matrix.job.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+          - { os: ubuntu-latest, target: x86_64-unknown-linux-gnu    }
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.job.target }}
+          override: true
+          profile: minimal
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+
+      - name: Show version information (Rust, cargo, GCC)
+        shell: bash
+        run: |
+          gcc --version || true
+          rustup -V
+          rustup toolchain list
+          rustup default
+          cargo -V
+          rustc -V
+
+      - name: Build
+        uses: actions-rs/cargo@v1
+        env:
+          SQLX_OFFLINE: true
+        with:
+          use-cross: ${{ matrix.job.use-cross }}
+          command: build
+          args: --locked --release --target=${{ matrix.job.target }} --manifest-path src/rust-graphql/Cargo.toml

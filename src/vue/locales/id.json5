@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "home": "Utama",
+    "about": "Tentang"
+  },
+  "index": {
+    "hi": "Hai",
+    "start": "Mulai",
+    "intro": "Uji pengetahuanmu pertanyaan yang menantang"
+  },
+  "about": {
+    "hi": "Hai 👋",
+    "thank": "Terimakasih sudah mampir"
+  },
+  "not-found": "Page not found"
+}

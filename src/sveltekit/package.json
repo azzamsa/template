@@ -1,0 +1,52 @@
+{
+  "name": "mold",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@7.11.0",
+  "scripts": {
+    "fmt:prettier": "prettier --write .",
+    "fmt:eslint": "eslint . --fix",
+    "fmt": "run-s fmt:*",
+    "lint:prettier": "prettier --check .",
+    "lint:kit": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "lint:eslint": "eslint .",
+    "lint": "run-s lint:*",
+    "test-e2e": "playwright test",
+    "test": "run-s test-*",
+    "dev": "vite --port 4173",
+    "preview": "vite preview --port 4173",
+    "build-only": "vite build",
+    "build": "run-p lint build-only"
+  },
+  "dependencies": {
+    "daisyui": "^2.28.0"
+  },
+  "devDependencies": {
+    "@iconify/svelte": "^3.0.0",
+    "@playwright/test": "^1.25.2",
+    "@sveltejs/adapter-netlify": "1.0.0-next.78",
+    "@sveltejs/adapter-node": "1.0.0-next.92",
+    "@sveltejs/kit": "next",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "autoprefixer": "^10.4.11",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "husky": "^8.0.1",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.16",
+    "postcss-load-config": "^4.0.1",
+    "prettier": "^2.7.1",
+    "prettier-plugin-svelte": "^2.7.0",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "svelte": "^3.50.1",
+    "svelte-check": "^2.9.0",
+    "svelte-preprocess": "^4.10.7",
+    "sveltekit-i18n": "^2.2.2",
+    "tailwindcss": "^3.1.8",
+    "tslib": "^2.4.0",
+    "typescript": "^4.8.3",
+    "vite": "^3.1.1"
+  }
+}

@@ -13,11 +13,11 @@ My template collections 🏗️
 
 ## 🦀 Rust
 
-- [GraphQL](https://github.com/azzamsa/rust-graphql)
-- [CLI](https://github.com/azzamsa/rust-cli)
+- [GraphQL](src/rust-graphql) - Rust GraphQL template.
+- [CLI](src/rust-cli) - Rust CLI template.
 
 ## 🌏 Javascript
 
-- [Vue](https://github.com/azzamsa/js-vue)
-- [Svelte](https://github.com/azzamsa/js-svelte)
-- [SvelteKit](https://github.com/azzamsa/js-sveltekit)
+- [Vue](src/js-vue) - Vue project template.
+- [Svelte](src/js-svelte) -  Svelte project template.
+- [SvelteKit](src/js-sveltekit) -  SvelteKit project template.
