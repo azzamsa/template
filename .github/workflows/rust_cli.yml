@@ -123,7 +123,7 @@ jobs:
 
       - name: Run tests
         # Test in windows raises some errors
-        if: matrix.job.os != 'windows-2022'
+        if: "!contains(matrix.job.os, 'windows')"
         uses: actions-rs/cargo@v1
         with:
           use-cross: ${{ matrix.job.use-cross }}
