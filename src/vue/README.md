@@ -5,8 +5,8 @@
 
 Typescript Vue Template 🏗️
 
-<a href="https://github.com/azzamsa/js-vue/actions/workflows/ci.yml">
-  <img src="https://github.com/azzamsa/js-vue/actions/workflows/ci.yml/badge.svg" alt="Build status" />
+<a href="https://github.com/azzamsa/template/actions/workflows/vue.yml">
+  <img src="https://github.com/azzamsa/template/actions/workflows/vue.yml/badge.svg" alt="Build status" />
 </a>
 
 </div>

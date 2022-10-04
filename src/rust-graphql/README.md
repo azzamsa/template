@@ -5,8 +5,8 @@
 
 Rust GraphQL Template 🏗️
 
-<a href="https://github.com/azzamsa/rust-graphql/workflows/ci.yml">
-    <img src="https://github.com/azzamsa/rust-graphql/workflows/ci/badge.svg" alt="Build status" />
+<a href="https://github.com/azzamsa/template/actions/workflows/rust_graphql.yml">
+    <img src="https://github.com/azzamsa/template/actions/workflows/rust_graphql.yml/badge.svg" alt="Build status" />
   </a>
 
 </div>

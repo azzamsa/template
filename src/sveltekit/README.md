@@ -5,8 +5,8 @@
 
 Typescript SvelteKit Template 🏗️
 
-<a href="https://github.com/azzamsa/js-svelteKit/actions/workflows/ci.yml">
-  <img src="https://github.com/azzamsa/js-svelteKit/actions/workflows/ci.yml/badge.svg" alt="Build status" />
+<a href="https://github.com/azzamsa/template/actions/workflows/sveltekit.yml">
+  <img src="https://github.com/azzamsa/template/actions/workflows/sveltekit.yml/badge.svg" alt="Build status" />
 </a>
 
 </div>

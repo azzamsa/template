@@ -5,8 +5,8 @@
 
 Rust CLI Template 🏗️
 
-<a href="https://github.com/azzamsa/rust-cli/workflows/ci.yml">
-    <img src="https://github.com/azzamsa/rust-cli/workflows/ci/badge.svg" alt="Build status" />
+<a href="https://github.com/azzamsa/template/actions/workflows/rust_cli.yml">
+    <img src="https://github.com/azzamsa/template/actions/workflows/rust_cli.yml/badge.svg" alt="Build status" />
   </a>
 
 </div>

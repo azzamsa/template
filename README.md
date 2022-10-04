@@ -16,7 +16,7 @@ My template collections 🏗️
 - [GraphQL](src/rust-graphql) - Rust GraphQL template.
 - [CLI](src/rust-cli) - Rust CLI template.
 
-## 🌏 Javascript
+## 🕸️ Javascript
 
 - [Vue](src/js-vue) - Vue project template.
 - [Svelte](src/js-svelte) -  Svelte project template.
