@@ -18,6 +18,6 @@ My template collections 🏗️
 
 ## 🕸️ Javascript
 
-- [Vue](src/js-vue) - Vue project template.
-- [Svelte](src/js-svelte) -  Svelte project template.
-- [SvelteKit](src/js-sveltekit) -  SvelteKit project template.
+- [Vue](src/vue) - Vue project template.
+- [Svelte](src/svelte) -  Svelte project template.
+- [SvelteKit](src/sveltekit) -  SvelteKit project template.
