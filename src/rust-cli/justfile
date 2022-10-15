@@ -1,0 +1,62 @@
+#!/usr/bin/env -S just --justfile
+
+alias d := dev
+alias t := test
+
+# List available commands.
+_default:
+    just --list --unsorted
+
+# Setup the repository.
+setup:
+    git-cliff --version || cargo install git-cliff
+    cargo-set-version --help || cargo install cargo-edit
+    cargo watch --version || cargo install cargo-watch
+    cargo outdated --version || cargo install --locked cargo-outdated
+    dprint --version || cargo install dprint
+
+# Develop the app.
+dev:
+    cargo watch -x fmt -x clippy -x run
+
+# Format the codebase.
+fmt:
+    cargo +nightly fmt --all
+    dprint fmt --config configs/dprint.json
+
+# Check is the codebase properly formatted.
+fmt-check:
+    cargo +nightly fmt --all --check
+    dprint check --config configs/dprint.json
+
+# Lint the codebase.
+lint:
+    cargo clippy --all --all-features --all-targets
+
+# Check the documentation.
+_doc-check:
+    cargo doc --all-features --no-deps
+
+# Lint the codebase.
+test:
+    cargo test --all --all-features --all-targets
+
+# Tasks to make the code-base comply with the rules. Mostly used locally or in git hooks.
+comply: fmt lint test
+
+# Check if the repository comply with the rules. Mostly used in CI.
+check: fmt-check lint test _doc-check
+
+# Create a new release. Example `just release v2.2.0`
+release version:
+    bash scripts/release.sh {{ version }}
+
+# Check dependencies health.
+up:
+    cargo +nightly udeps
+    cargo outdated --root-deps-only
+
+# Local Variables:
+# mode: makefile
+# End:
+# vim: set ft=make :

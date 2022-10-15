@@ -1,0 +1,58 @@
+#!/usr/bin/env -S just --justfile
+
+alias d := dev
+alias t := test
+
+# List available commands.
+_default:
+    just --list --unsorted
+
+# Setup the repository.
+setup:
+    dprint --version || cargo install --locked dprint
+
+    pnpm i
+    pnpx husky install
+
+# Clean build output
+clean:
+    rm -rf build
+
+# Develop the app.
+dev:
+    pnpm run dev
+
+# Build the app.
+build:
+    pnpm run build-only
+
+# Format the codebase.
+fmt:
+    dprint fmt --config configs/dprint.json
+    pnpm run fmt
+
+# Check is the codebase properly formatted.
+fmt-check:
+    dprint check --config configs/dprint.json
+
+# Lint the codebase.
+lint: fmt-check
+    pnpm run lint
+
+# Test the codebase.
+test:
+    pnpm run test-e2e
+
+# Tasks to make the code-base comply with the rules. Mostly used locally or in git hooks.
+comply: fmt lint
+
+# Check if the repository comply with the rules. Mostly used in CI.
+check: fmt-check lint
+
+# Create a new release. Example `just release v2.2.0`
+release version:
+    bash scripts/release.sh {{ version }}
+
+# Check dependencies health.
+up:
+    ncu

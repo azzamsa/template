@@ -38,12 +38,15 @@ jobs:
           cp dprint ~/.cargo/bin/
           dprint --version
 
+      - name: Install latest just release
+        uses: extractions/setup-just@v1
+
       - name: Install
         run: pnpm install
 
       - name: Lint
         run: |
-          make lint
+          just lint
 
   test-e2e:
     name: Test E2E

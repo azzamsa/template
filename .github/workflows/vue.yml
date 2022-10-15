@@ -38,12 +38,15 @@ jobs:
           cp dprint ~/.cargo/bin/
           dprint --version
 
+      - name: Install latest just release
+        uses: extractions/setup-just@v1
+
       - name: Install
         run: pnpm install
 
       - name: Lint
         run: |
-          make lint
+          just lint
 
   test:
     name: Test (${{ matrix.node-version}}, ${{ matrix.os }})
@@ -71,7 +74,7 @@ jobs:
           cache-dependency-path: src/vue/pnpm-lock.yaml
 
       - run: pnpm install
-      - run: pnpm run test-unit
+      - run: pnpm run test:unit
 
   test-e2e:
     name: Test E2E

@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "vite --port 4173",
     "preview": "vite preview --port 4173",
-    "test-e2e": "start-server-and-test preview http://localhost:4173/ 'cypress run --e2e'",
-    "test-unit": "vitest --run",
-    "test": "run-s test-*",
+    "test:e2e": "start-server-and-test preview http://localhost:4173/ 'cypress run --e2e'",
+    "test:unit": "vitest --run",
+    "test": "run-s test:*",
     "fmt:rustywind": "rustywind --write .",
     "fmt:eslint": "eslint . --fix",
     "fmt": "run-s fmt:*",
