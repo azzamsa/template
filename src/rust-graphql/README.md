@@ -1,3 +1,5 @@
+### 📢 PSA: Rust GraphQL is extracted to [azzamsa/tin](https://github.com/azzamsa/tin)
+
 <div align="center">
   <h1>Rust GraphQL</h1>
 

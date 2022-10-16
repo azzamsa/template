@@ -13,7 +13,7 @@ My template collections 🏗️
 
 ## 🦀 Rust
 
-- [GraphQL](src/rust-graphql) - Rust GraphQL template.
+- [GraphQL](https://github.com/azzamsa/tin) - Rust GraphQL template.
 - [CLI](src/rust-cli) - Rust CLI template.
 
 ## 🕸️ Javascript
