@@ -55,8 +55,3 @@ release version:
 # Check dependencies health.
 up:
     taze
-
-# Local Variables:
-# mode: makefile
-# End:
-# vim: set ft=make :
