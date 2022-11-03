@@ -55,4 +55,4 @@ release version:
 
 # Check dependencies health.
 up:
-    ncu
+    taze
