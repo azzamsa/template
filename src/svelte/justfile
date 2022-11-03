@@ -44,4 +44,4 @@ release version:
     bash scripts/release.sh {{ version }}
 
 up:
-    ncu
+    taze
