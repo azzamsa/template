@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  title: 'Frontend',
+  title: 'Mold',
   meta: [{ name: 'description', content: 'Vue Template' }],
 })
 </script>

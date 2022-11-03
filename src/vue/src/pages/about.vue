@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  title: 'Frontend - About',
+  title: 'Mold - About',
 })
 </script>
 
