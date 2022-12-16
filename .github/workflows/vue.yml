@@ -17,7 +17,7 @@ defaults:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - name: Install pnpm
@@ -31,12 +31,10 @@ jobs:
           cache: pnpm
           cache-dependency-path: src/vue/pnpm-lock.yaml
 
-      - name: Install dprint
-        run: |
-          curl --location https://github.com/dprint/dprint/releases/download/0.30.3/dprint-x86_64-unknown-linux-gnu.zip --output dprint.zip
-          unzip dprint.zip
-          cp dprint ~/.cargo/bin/
-          dprint --version
+      - name: Install latest dprint release
+        uses: taiki-e/install-action@v1
+        with:
+          tool: dprint
 
       - name: Install latest just release
         uses: extractions/setup-just@v1
@@ -55,7 +53,7 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x]
-        os: [ubuntu-latest]
+        os: [ubuntu-22.04]
       fail-fast: false
 
     steps:
@@ -78,7 +76,7 @@ jobs:
 
   test-e2e:
     name: Test E2E
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
