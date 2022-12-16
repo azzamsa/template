@@ -15,100 +15,91 @@ defaults:
     working-directory: src/rust-cli
 
 env:
-  MIN_SUPPORTED_RUST_VERSION: "1.60.0"
+  MIN_SUPPORTED_RUST_VERSION: "1.66.0"
+
 
 jobs:
   code_quality:
-    name: Code quality
-    runs-on: ubuntu-latest
+    name: Code Quality
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
 
       - name: Install rust toolchain
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@v1
         with:
-          # nightly is only use for rustfmt
-          toolchain: nightly
-          default: true
-          profile: minimal # no documentation
+          toolchain: stable
           components: clippy, rustfmt
-
-      - name: Install dprint
-        run: |
-          curl --location https://github.com/dprint/dprint/releases/download/0.30.3/dprint-x86_64-unknown-linux-gnu.zip --output dprint.zip
-          unzip dprint.zip
-          cp dprint ~/.cargo/bin/
-          dprint --version
 
       - name: Install latest just release
         uses: extractions/setup-just@v1
 
-      - name: Cache
-        uses: Swatinem/rust-cache@v1
+      - name: Install latest dprint release
+        uses: taiki-e/install-action@v1
+        with:
+          tool: dprint
 
-      - name: Ensure `cargo fmt` has been run
-        run: just fmt-check
+      - name: Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Ensure `fmt` has been run
+        run:  just fmt-check
 
       - name: Ensure MSRV is set in `clippy.toml`
         run: grep "^msrv = \"${{ env.MIN_SUPPORTED_RUST_VERSION }}\"\$" clippy.toml
 
       - name: Run clippy
-        working-directory: src/rust-cli
         run: just lint
 
-
-  min_version:
-    name: Minimum supported rust version
-    runs-on: ubuntu-latest
+  msrv:
+    name: Minimum Supported Rust Version
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
 
       - name: Install rust toolchain (v${{ env.MIN_SUPPORTED_RUST_VERSION }})
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: ${{ env.MIN_SUPPORTED_RUST_VERSION }}
-          default: true
-          profile: minimal
+
+      - name: Install latest nextest release
+        uses: taiki-e/install-action@nextest
 
       - name: Install latest just release
         uses: extractions/setup-just@v1
 
       - name: Cache
-        uses: Swatinem/rust-cache@v1
+        uses: Swatinem/rust-cache@v2
 
       - name: Run tests
         run: just test
 
   build:
-    name: ${{ matrix.job.os }} (${{ matrix.job.target }})
+    name: Build (${{ matrix.job.os }}, ${{ matrix.job.target }})
     runs-on: ${{ matrix.job.os }}
     strategy:
       fail-fast: false
       matrix:
         job:
-          - { os: ubuntu-latest, target: x86_64-unknown-linux-gnu     }
-          - { os: ubuntu-latest, target: x86_64-unknown-linux-musl    , use-cross: true }
-          - { os: macos-latest , target: x86_64-apple-darwin          }
-          - { os: windows-latest, target: x86_64-pc-windows-gnu       }
-          - { os: windows-latest, target: x86_64-pc-windows-msvc      }
+          - { os: ubuntu-22.04, target: x86_64-unknown-linux-gnu    }
+          - { os: ubuntu-22.04, target: x86_64-unknown-linux-musl   , use-cross: true }
+          - { os: macos-12    , target: x86_64-apple-darwin         }
+          - { os: windows-2019, target: x86_64-pc-windows-msvc      }
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
 
       - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@v1
         with:
-          # nightly is only use for rustfmt
-          toolchain: nightly
+          toolchain: stable
           target: ${{ matrix.job.target }}
-          override: true
-          profile: minimal
 
       - name: Cache
-        uses: Swatinem/rust-cache@v1
+        uses: Swatinem/rust-cache@v2
 
       - name: Show version information
         shell: bash
@@ -120,18 +111,23 @@ jobs:
           cargo -V
           rustc -V
 
-      - name: Build
-        uses: actions-rs/cargo@v1
-        with:
-          use-cross: ${{ matrix.job.use-cross }}
-          command: build
-          args: --locked --release --target=${{ matrix.job.target }} --manifest-path src/rust-cli/Cargo.toml
+      - name: Set cargo cmd
+        shell: bash
+        run: echo "CARGO_CMD=cargo" >> $GITHUB_ENV
 
-      - name: Run tests
-        # Test in windows raises some errors
-        if: "!contains(matrix.job.os, 'windows')"
-        uses: actions-rs/cargo@v1
+      - name: Set cargo cmd to cross
+        shell: bash
+        if: ${{ matrix.job.use-cross == true }}
+        run: echo "CARGO_CMD=cross" >> $GITHUB_ENV
+
+      - name: Rust cache
+        uses: Swatinem/rust-cache@v2
         with:
-          use-cross: ${{ matrix.job.use-cross }}
-          command: test
-          args: --locked --release --target=${{ matrix.job.target }} --manifest-path src/rust-cli/Cargo.toml
+          key: ${{ matrix.job.os }}-${{ matrix.job.target }}
+
+      - name: Install cross
+        if: ${{ matrix.job.use-cross == true }}
+        uses: taiki-e/install-action@cross
+
+      - name: Build
+        run: ${{ env.CARGO_CMD }} build --verbose --target=${{ matrix.job.target }}
