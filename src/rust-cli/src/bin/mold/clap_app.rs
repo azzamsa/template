@@ -1,8 +1,8 @@
-use std::env;
+use std::{env, path::PathBuf};
 
-use clap::{crate_name, crate_version, AppSettings, Arg, ColorChoice, Command};
+use clap::{crate_name, crate_version, value_parser, Arg, ColorChoice, Command};
 
-pub fn build(interactive_output: bool) -> Command<'static> {
+pub fn build(interactive_output: bool) -> Command {
     let clap_color_choice = if interactive_output && env::var_os("NO_COLOR").is_none() {
         ColorChoice::Auto
     } else {
@@ -12,7 +12,6 @@ pub fn build(interactive_output: bool) -> Command<'static> {
         .version(crate_version!())
         .arg_required_else_help(true)
         .color(clap_color_choice)
-        .setting(AppSettings::DeriveDisplayOrder)
         .dont_collapse_args_in_usage(true)
         .about(
             "CLI 🏗️. \n
@@ -25,17 +24,15 @@ pub fn build(interactive_output: bool) -> Command<'static> {
         .arg(
             Arg::new("FILE")
                 .required(true)
-                .takes_value(true)
-                .multiple_values(true)
-                .empty_values(false)
+                .num_args(1..)
+                .value_parser(value_parser!(PathBuf))
                 .help("File(s) to print"),
         )
         .arg(
-            Arg::with_name("color")
+            Arg::new("color")
                 .long("color")
                 .overrides_with("color")
-                .takes_value(true)
-                .possible_values(&["auto", "never", "always"])
+                .value_parser(["auto", "never", "always"])
                 .default_value("auto")
                 .help("When to use colors (*auto*, never, always)")
                 .long_help(

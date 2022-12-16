@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use atty::{self, Stream};
 use clap::ArgMatches;
@@ -30,7 +30,7 @@ impl App {
 
     pub fn config(&self) -> Result<Config> {
         let files = self.files();
-        let colored_output = match self.matches.value_of("color") {
+        let colored_output = match self.matches.get_one::<String>("color").map(|s| s.as_str()) {
             Some("always") => true,
             Some("never") => false,
             _ => self.interactive_output,
@@ -40,18 +40,9 @@ impl App {
             colored_output,
         })
     }
-    fn files(&self) -> Vec<&Path> {
-        match self.matches.values_of("FILE") {
-            Some(files) => {
-                files
-                    .into_iter()
-                    .map(Path::new)
-                    // .take_while(|f| f.exists())
-                    // Filtering only existing fails can't fails the program if
-                    // only one file passed
-                    .collect()
-            }
-            None => unreachable!("No file supplied"),
-        }
+    fn files(&self) -> Option<Vec<&Path>> {
+        self.matches
+            .get_many::<PathBuf>("FILE")
+            .map(|vs| vs.map(|p| p.as_path()).collect::<Vec<_>>())
     }
 }

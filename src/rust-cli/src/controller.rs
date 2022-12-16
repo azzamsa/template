@@ -4,12 +4,12 @@ use crate::{
     printer::print_files,
 };
 
-pub struct Controller<'a> {
-    config: &'a Config<'a>,
+pub struct Controller {
+    config: Config,
 }
 
-impl<'b> Controller<'b> {
-    pub fn new<'a>(config: &'a Config) -> Controller<'a> {
+impl Controller {
+    pub fn new(config:  Config) -> Controller {
         Controller { config }
     }
 
