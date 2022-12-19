@@ -14,7 +14,7 @@ My template collections 🏗️
 ## 🦀 Rust
 
 - [GraphQL](https://github.com/azzamsa/tin) - Rust GraphQL template.
-- [CLI](src/rust-cli) - Rust CLI template.
+- [CLI](https://github.com/azzamsa/zman) - A time progress bar utilities. You can use it as starting point to build CLI app.
 
 ## 🕸️ Javascript
 
