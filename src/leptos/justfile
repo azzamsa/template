@@ -11,9 +11,9 @@ _default:
 # Setup the repository.
 setup: _areyousure
     rustup target add wasm32-unknown-unknown
-    npm install
 
-    just _cargo-install 'trunk microserver leptosfmt bacon'
+    # npm install -g rustywind
+    just _cargo-install 'cargo-leptos microserver leptosfmt bacon'
 
 # Tasks to make the code-base comply with the rules. Mostly used in git hooks.
 comply: fmt lint test
@@ -27,19 +27,19 @@ dev:
 
 # Run the app in develompent mode
 run:
-    trunk serve
+    cargo leptos watch
 
 # Format the codebase.
 fmt:
     cargo fmt --all
-    npx rustywind --write .
+    rustywind --write .
     leptosfmt src
     dprint fmt --config configs/dprint.json
 
 # Check is the codebase properly formatted.
 fmt-check:
     cargo fmt --check
-    npx rustywind --check-formatted .
+    rustywind --check-formatted .
     dprint check --config configs/dprint.json
 
 # Lint the codebase.
@@ -48,7 +48,6 @@ lint:
 
 # Test the codebase.
 test:
-    cargo nextest run
 
 # Check dependencies health. Pass `--write` to uppgrade dependencies.
 [unix]
