@@ -1,0 +1,17 @@
+[package]
+name = "mold"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+leptos = { version = "0.5.1", features = ["nightly", "csr"] }
+leptos_meta = { version = "0.5.1", features = ["csr"] }
+leptos_router = { version = "0.5.1", features = ["csr"] }
+
+gloo-net = { version = "0.4.0", features = ["http"] }
+log = "0.4.20"
+
+# dependecies for client (enable when csr or hydrate set)
+console_error_panic_hook = { version = "0.1.7" }
+console_log = { version = "1" }
+wasm-bindgen = { version = "0.2" }
