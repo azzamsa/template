@@ -29,6 +29,10 @@ dev:
 run:
     cargo leptos watch
 
+# Build the app
+build:
+    cargo leptos build
+
 # Format the codebase.
 fmt:
     cargo fmt --all

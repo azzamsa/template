@@ -6,8 +6,9 @@ use leptos_router::*;
 pub fn App() -> impl IntoView {
     provide_meta_context();
 
+    // The css file name is the crate name!
     view! {
-        <Stylesheet id="leptos" href="/pkg/pokedex.css"/>
+        <Stylesheet id="leptos" href="/pkg/mold.css"/>
         <Link rel="shortcut icon" type_="image/ico" href="/favicon.ico"/>
         <Router>
             <Routes>
@@ -34,7 +35,6 @@ fn Home() -> impl IntoView {
                 "Something's here | "
                 {move || if count() == 0 { "Click me!".to_string() } else { count().to_string() }}
 
-                " | Some more text"
             </button>
         </main>
     }

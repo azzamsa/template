@@ -45,8 +45,8 @@ jobs:
       - name: Install latest just release
         uses: taiki-e/install-action@just
 
-      - name: Install latest nextest release
-        uses: taiki-e/install-action@nextest
+      - name: Install latest rustywind release
+        uses: taiki-e/install-action@rustywind
 
       - name: Ensure MSRV is set in `clippy.toml`
         run: grep "^msrv = \"${{ env.MIN_SUPPORTED_RUST_VERSION }}\"\$" clippy.toml
@@ -72,8 +72,8 @@ jobs:
       - name: Install latest just release
         uses: taiki-e/install-action@just
 
-      - name: Install latest nextest release
-        uses: taiki-e/install-action@nextest
+      - name: Install latest rustywind release
+        uses: taiki-e/install-action@rustywind
 
       - name: Run test
         run:  just test
@@ -110,8 +110,8 @@ jobs:
       - name: Install latest just release
         uses: taiki-e/install-action@just
 
-      - name: Install latest nextest release
-        uses: taiki-e/install-action@nextest
+      - name: Install latest rustywind release
+        uses: taiki-e/install-action@rustywind
 
       - name: Show version information
         shell: bash
@@ -123,10 +123,10 @@ jobs:
           cargo -V
           rustc -V
 
-          npx rustywind --version
+          rustywind --version
 
       - name: Run build
-        run:  trunk build
+        run:  just build
 
       - name: Run test
         run:  just test
