@@ -13,10 +13,7 @@ pub fn init(config: &LeptosOptions) -> Result<(), crate::Error> {
         filter::LevelFilter::DEBUG
     };
 
-    let env_filter = filter::EnvFilter::new("")
-        .add_directive(log_level.into())
-        .add_directive("hyper=warn".parse().unwrap())
-        .add_directive("reqwest=warn".parse().unwrap());
+    let env_filter = filter::EnvFilter::new("").add_directive(log_level.into());
 
     let fmt_layer = layer().with_filter(env_filter);
     registry().with(fmt_layer).init();

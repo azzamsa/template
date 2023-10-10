@@ -6,7 +6,8 @@ pub mod logger;
 
 pub use error::Error;
 
-cfg_if! { if #[cfg(feature = "hydrate")] {
+cfg_if! {
+if #[cfg(feature = "hydrate")] {
     use leptos::*;
     use wasm_bindgen::prelude::wasm_bindgen;
     use crate::app::*;

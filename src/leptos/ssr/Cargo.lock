@@ -1277,7 +1277,6 @@ dependencies = [
  "tracing",
  "tracing-log",
  "tracing-subscriber",
- "wasm-bindgen",
 ]
 
 [[package]]
