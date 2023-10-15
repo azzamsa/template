@@ -1,0 +1,18 @@
+[application]
+name = "Mold"
+default_platform = "web"
+out_dir = "dist"
+asset_dir = "public"
+
+[web.app]
+title = "Mold ⛺"
+
+[web.watcher]
+reload_html = true
+watch_path = ["src", "public"]
+
+[web.resource]
+# CSS style file
+style = ["compiled.css"]
+
+[web.resource.dev]
